@@ -1,0 +1,29 @@
+Apenas duas estações no local.
+
+Colocar os dados dessas duas estações no banco de dados por meio desse codigo
+
+
+df = Flow(station='34789000', source= 'ANA')
+df2 = Flow(station='39770010', source = 'ANA')
+
+        result = Timeseriesresults.objects.get(pk=1)#esse
+        censor = CvCensorcode.objects.get(name='Unknown')
+        quality = CvQualitycode.objects.get(name='Unknown')
+        units_time = Units.objects.get(pk=1)
+        time_inter = 1
+        value_utc = 1
+        source = Organizations.objects.get(pk=1)
+        station = result.resultid.featureactionid.samplingfeatureid.samplingfeaturename
+
+        time_serie_result_list = []
+
+        for i in dados.index:
+            obj_ts = Timeseriesresultvalues(resultid=result, censorcodecv=censor,
+                                            qualitycodecv=quality, valuedatetimeutcoffset=value_utc,
+                                            timeaggregationinterval=time_inter,
+                                            timeaggregationintervalunitsid=units_time,
+                                            valuedatetime=i.to_pydatetime(),
+                                            datavalue=dados[dados.columns.values[0]][i])
+            time_serie_result_list.append(obj_ts)
+        Timeseriesresultvalues.objects.bulk_create(time_serie_result_list)
+

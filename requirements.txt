@@ -1,2 +1,8 @@
 Django>=3.0,<4.0
-psycopg2-binary>=2.8
+psycopg2-binary
+libpq-dev
+pandas
+git+https://github.com/clebsonpy/HidroComp.git@master
+matplotlib
+plotly
+asgiref==3.2.9
